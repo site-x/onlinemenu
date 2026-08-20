@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Da Michele Online Menu</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23fffaf1'/%3E%3Ctext x='32' y='41' text-anchor='middle' font-size='30' font-family='Georgia' font-weight='700' fill='%23b33a25'%3EdM%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      --paper: #fffaf1;
+      --paper-deep: #f4eadc;
+      --ink: #241b16;
+      --muted: #66594f;
+      --brand: #b33a25;
+      --brand-dark: #872a1d;
+      --olive: #55624b;
+      --line: rgba(36, 27, 22, 0.16);
+      --shadow: 0 12px 30px rgba(55, 39, 25, 0.12);
+      color-scheme: light;
+      font-family: Georgia, "Times New Roman", serif;
+      scroll-behavior: smooth;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-padding-top: 74px;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top left, rgba(179, 58, 37, 0.09), transparent 34rem),
+        linear-gradient(180deg, var(--paper), #fbf5ec 55%, var(--paper-deep));
+      color: var(--ink);
+      font-size: 17px;
+      line-height: 1.48;
+    }
+
+    body.no-scroll {
+      overflow-x: hidden;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .site-header {
+      background: rgba(255, 250, 241, 0.96);
+    }
+
+    .header-inner {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 8px 14px 6px;
+      text-align: center;
+    }
+
+    .brand-logo {
+      display: block;
+      width: clamp(230px, 72vw, 430px);
+      height: clamp(62px, 19vw, 112px);
+      margin: 0 auto;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .strapline {
+      margin: 4px 0 0;
+      color: var(--brand-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .controls {
+      background: rgba(255, 250, 241, 0.92);
+    }
+
+    .controls-inner {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 8px 14px 10px;
+    }
+
+    .menu-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding: 4px;
+      background: #efe2d0;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .switch-button,
+    .category-link {
+      min-height: 44px;
+      border: 0;
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--ink);
+      background: transparent;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .switch-button[aria-pressed="true"] {
+      background: var(--brand);
+      color: #fffdf8;
+      box-shadow: 0 4px 12px rgba(135, 42, 29, 0.22);
+    }
+
+    .search-row {
+      position: relative;
+      margin-bottom: 0;
+    }
+
+    .search-row input {
+      width: 100%;
+      min-height: 46px;
+      padding: 10px 46px 10px 16px;
+      border: 1px solid rgba(36, 27, 22, 0.25);
+      border-radius: 8px;
+      background: #fffdf8;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      outline: none;
+    }
+
+    .search-row input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(179, 58, 37, 0.15);
+    }
+
+    .search-icon {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      transform: translateY(-50%);
+      color: var(--brand-dark);
+      pointer-events: none;
+    }
+
+    .category-strip {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(255, 250, 241, 0.96);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    .category-shell {
+      position: relative;
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 8px 14px;
+    }
+
+    .category-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: 0 22px 2px 0;
+      scrollbar-width: thin;
+      scroll-behavior: smooth;
+      scroll-padding-inline: 14px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .category-nav::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .category-nav::-webkit-scrollbar-thumb {
+      background: rgba(85, 98, 75, 0.35);
+      border-radius: 999px;
+    }
+
+    .category-shell::after {
+      position: absolute;
+      top: 8px;
+      right: 14px;
+      bottom: 10px;
+      width: 46px;
+      content: "";
+      pointer-events: none;
+      background: linear-gradient(90deg, rgba(255, 250, 241, 0), rgba(255, 250, 241, 0.96) 58%);
+    }
+
+    .nav-cue {
+      position: absolute;
+      top: 50%;
+      right: 18px;
+      z-index: 1;
+      transform: translateY(-50%);
+      color: var(--brand-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 900;
+      pointer-events: none;
+    }
+
+    .category-link {
+      flex: 0 0 auto;
+      padding: 0 16px;
+      border: 1px solid rgba(36, 27, 22, 0.18);
+      background: #fffdf8;
+      white-space: nowrap;
+    }
+
+    .category-link.is-active {
+      border-color: var(--olive);
+      background: var(--olive);
+      color: #fffdf8;
+    }
+
+    main {
+      width: min(100%, 1120px);
+      margin: 0 auto;
+      padding: 22px 14px 54px;
+    }
+
+    .notice {
+      margin: 0 0 18px;
+      padding: 12px 14px;
+      border: 1px solid rgba(179, 58, 37, 0.22);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.82);
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.96rem;
+    }
+
+    .category-section {
+      margin: 0 0 34px;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 0 0 14px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid rgba(179, 58, 37, 0.32);
+    }
+
+    .section-heading h2 {
+      margin: 0;
+      color: var(--brand);
+      font-size: clamp(1.7rem, 8vw, 2.5rem);
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .section-count {
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .items-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .menu-item {
+      display: grid;
+      grid-template-columns: 104px minmax(0, 1fr);
+      gap: 14px;
+      min-height: 126px;
+      padding: 10px;
+      border: 1px solid rgba(36, 27, 22, 0.13);
+      border-radius: 8px;
+      background: rgba(255, 253, 248, 0.9);
+      box-shadow: 0 4px 14px rgba(55, 39, 25, 0.07);
+      cursor: pointer;
+    }
+
+    .menu-item:focus-visible {
+      outline: 3px solid rgba(179, 58, 37, 0.35);
+      outline-offset: 3px;
+    }
+
+    .item-photo,
+    .placeholder {
+      width: 104px;
+      height: 104px;
+      margin: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #eadcc9;
+    }
+
+    .item-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .placeholder {
+      display: grid;
+      place-items: center;
+      border: 1px dashed rgba(85, 98, 75, 0.45);
+      color: var(--olive);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 800;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .item-content {
+      min-width: 0;
+      padding: 1px 0;
+    }
+
+    .item-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 5px;
+    }
+
+    .item-name {
+      margin: 0;
+      font-size: 1.16rem;
+      line-height: 1.17;
+    }
+
+    .item-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-top: 6px;
+    }
+
+    .tag {
+      padding: 3px 7px;
+      border-radius: 999px;
+      background: rgba(85, 98, 75, 0.12);
+      color: var(--olive);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .price {
+      color: var(--brand-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.08rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .desc {
+      margin: 0;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.98rem;
+      line-height: 1.42;
+    }
+
+    .empty-state {
+      display: none;
+      padding: 28px 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+      text-align: center;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05rem;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 30;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(36, 27, 22, 0.58);
+    }
+
+    .modal.is-open {
+      display: flex;
+    }
+
+    .modal-panel {
+      width: min(100%, 680px);
+      max-height: min(90vh, 760px);
+      overflow: auto;
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .modal-media {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      background: #eadcc9;
+    }
+
+    .modal-media img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .modal-media .placeholder {
+      width: 100%;
+      height: 100%;
+      border-radius: 0;
+      border-left: 0;
+      border-right: 0;
+    }
+
+    .modal-body {
+      padding: 18px;
+    }
+
+    .modal-top {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: baseline;
+      margin-bottom: 10px;
+    }
+
+    .modal-title {
+      margin: 0;
+      color: var(--brand);
+      font-size: clamp(1.7rem, 8vw, 2.45rem);
+      line-height: 1.05;
+    }
+
+    .modal-price {
+      color: var(--brand-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.3rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .modal-desc {
+      margin: 0;
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.05rem;
+      line-height: 1.5;
+    }
+
+    .modal-actions {
+      display: flex;
+      justify-content: end;
+      margin-top: 18px;
+    }
+
+    .close-button {
+      min-height: 44px;
+      padding: 0 22px;
+      border: 0;
+      border-radius: 6px;
+      background: var(--brand);
+      color: #fffdf8;
+      cursor: pointer;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      font-weight: 800;
+    }
+
+    .site-footer {
+      margin-top: 30px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (min-width: 720px) {
+      html {
+        scroll-padding-top: 78px;
+      }
+
+      .header-inner {
+        padding-top: 10px;
+        padding-bottom: 8px;
+      }
+
+      .controls-inner {
+        display: grid;
+        grid-template-columns: 260px minmax(280px, 1fr);
+        grid-template-areas: "switch search";
+        gap: 12px;
+        align-items: center;
+      }
+
+      .menu-switch {
+        grid-area: switch;
+        margin: 0;
+      }
+
+      .search-row {
+        grid-area: search;
+        margin: 0;
+      }
+
+      .category-shell {
+        padding-inline: 22px;
+      }
+
+      main {
+        padding-inline: 22px;
+      }
+
+      .items-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .menu-item {
+        grid-template-columns: 118px minmax(0, 1fr);
+      }
+
+      .item-photo,
+      .placeholder {
+        width: 118px;
+        height: 118px;
+      }
+    }
+
+    @media (min-width: 1040px) {
+      .items-grid {
+        gap: 16px;
+      }
+
+      .menu-item {
+        padding: 12px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      :root {
+        scroll-behavior: auto;
+      }
+    }
+  </style>
+</head>
+<body class="no-scroll">
+  <header class="site-header">
+    <div class="header-inner">
+      <img class="brand-logo" src="da michele logo 1 transparent.png" alt="Da Michele">
+      <p class="strapline">The sacred temple of pizza</p>
+    </div>
+  </header>
+  <section class="controls" aria-label="Menu controls">
+    <div class="controls-inner">
+      <div class="menu-switch" aria-label="Menu type">
+        <button class="switch-button" type="button" data-menu="allDay" aria-pressed="true">All Day</button>
+        <button class="switch-button" type="button" data-menu="sunday" aria-pressed="false">Sunday</button>
+      </div>
+      <label class="search-row">
+        <span class="sr-only">Search dishes</span>
+        <input id="searchInput" type="search" placeholder="Search dishes or ingredients" autocomplete="off">
+        <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+          <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </label>
+    </div>
+  </section>
+  <div class="category-strip">
+    <div class="category-shell">
+      <nav class="category-nav" id="categoryNav" aria-label="Menu categories"></nav>
+      <span class="nav-cue" aria-hidden="true">›</span>
+    </div>
+  </div>
+
+  <main>
+    <p class="notice" id="menuNotice"></p>
+    <div id="menuRoot"></div>
+    <div class="empty-state" id="emptyState">No dishes match your search.</div>
+    <footer class="site-footer">
+      Prices are subject to a 10% service charge and prevailing government taxes. Vegetarian items are marked where shown on the printed menu.
+    </footer>
+  </main>
+
+  <div class="modal" id="itemModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-panel">
+      <div class="modal-media" id="modalMedia"></div>
+      <div class="modal-body">
+        <div class="modal-top">
+          <h2 class="modal-title" id="modalTitle"></h2>
+          <strong class="modal-price" id="modalPrice"></strong>
+        </div>
+        <p class="modal-desc" id="modalDesc"></p>
+        <div class="item-tags" id="modalTags"></div>
+        <div class="modal-actions">
+          <button class="close-button" type="button" id="modalClose">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const photos = {
+      "4 Cheese": "assets/menu-photos/4-cheese.jpg",
+      "Bufalina": "assets/menu-photos/bufalina.jpg",
+      "Capocollo": "assets/menu-photos/capocollo.jpg",
+      "Capricciosa": "assets/menu-photos/capricciosa.jpg",
+      "Cetara": "assets/menu-photos/cetara.jpg",
+      "Cosacca": "assets/menu-photos/cosacca.jpg",
+      "Diavola": "assets/menu-photos/diavola.jpg",
+      "Focaccia": "assets/menu-photos/focaccia.jpg",
+      "Friarielli & Salsiccia": "assets/menu-photos/friarielli-salsiccia.jpg",
+      "Fritto Di Mare": "assets/menu-photos/fritto-di-mare.jpg",
+      "Sicilian Garden Salad": "assets/menu-photos/garden-salad.jpg",
+      "Lasagna Napoletana": "assets/menu-photos/lasagna-napoletana.jpg",
+      "Margherita": "assets/menu-photos/margherita.jpg",
+      "Marinara": "assets/menu-photos/marinara.jpg",
+      "Marita": "assets/menu-photos/marita.jpg",
+      "Millefoglie Dello Chef": "assets/menu-photos/millefoglie-dello-chef.jpg",
+      "Ortolana": "assets/menu-photos/ortolana.jpg",
+      "Panna Cotta": "assets/menu-photos/panna-cotta.jpg",
+      "Parmigiana Di Melanzane": "assets/menu-photos/parmigiana-di-melanzane.jpg",
+      "Polpette Della Nonna": "assets/menu-photos/polpette-della-nonna.jpg",
+      "Prosciutto & Funghi": "assets/menu-photos/prosciutto-funghi.jpg",
+      "Provola & Pepe": "assets/menu-photos/provola-pepe.jpg",
+      "Puttanesca Di Toto": "assets/menu-photos/puttanesca-di-toto.jpg",
+      "Ragu Della Portiera": "assets/menu-photos/ragu-della-portiera.jpg",
+      "Ravioli Pomodoro E Burrata": "assets/menu-photos/ravioli-pomodoro-burrata.jpg",
+      "Risotto Al Polpo E Nero Di Seppia": "assets/menu-photos/risotto-polpo-nero-seppia.jpg",
+      "Classic Tiramisu": "assets/menu-photos/tiramisu.jpg",
+      "Toscana": "assets/menu-photos/toscana.jpg",
+      "Truffle Porcini": "assets/menu-photos/truffle-porcini.jpg",
+      "Zuppa Di Cozze Di Tropea": "assets/menu-photos/zuppa-di-cozze.jpg"
+    };
+
+    const sharedPizza = [
+      item("Marinara", "tomato sauce, garlic, oregano", "23", photos["Marinara"], ["V", "Le Classiche"]),
+      item("Cosacca", "tomato sauce, pecorino Romano DOP", "26", photos["Cosacca"], ["V", "Le Classiche"]),
+      item("Margherita", "tomato sauce, pecorino Romano DOP, Agerola fior di latte, fresh basil", "28", photos["Margherita"], ["V", "Le Classiche"]),
+      item("Marita", "half marinara / half margherita", "28", photos["Marita"], ["V", "Le Classiche"]),
+      item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
+      item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
+      item("Toscana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "34", photos["Toscana"], ["Le Rosse"]),
+      item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
+      item("Tonno & Cipolla", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion", "32", "", ["Le Rosse"]),
+      item("Prosciutto & Funghi", "Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Bianche"]),
+      item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
+      item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
+      item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
+      item("Burrata & Capocollo", "Agerola fior di latte, black Leccino olives, sundry tomato, capocollo di Martina Franca, pecorino Romano DOP, 125gr of Puglia's burrata", "40", photos["Capocollo"], ["Le Bianche"]),
+      item("Capricciosa", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms, Leccino olives, artichoke", "36", photos["Capricciosa"], ["Le Rosse"]),
+      item("Truffle Porcini", "Agerola fior di latte, porcini mushroom, truffle pate, pecorino Romano DOP", "40", photos["Truffle Porcini"], ["V", "Le Bianche"]),
+      item("Bufalina", "tomato sauce, buffalo mozzarella, basil, pecorino Romano DOP", "36", photos["Bufalina"], ["V", "Le Rosse"]),
+      item("Special Of The Day", "Kindly approach our friendly staff", "", "", [])
+    ];
+
+    const sharedDesserts = [
+      item("Affogato", "a classic Italian coffee-based dessert featuring a scoop of ice cream drowned in a shot of hot espresso", "12"),
+      item("Panna Cotta", "classic Italian custard accompanied by a wild medley of berries", "14", photos["Panna Cotta"]),
+      item("Classic Tiramisu", "espresso, mascarpone, savoiardi biscuits and coffee liquor", "15", photos["Classic Tiramisu"]),
+      item("Millefoglie Dello Chef", "deconstructed millefoglie, white chocolate namelaka cream, Amarena cherry, hazelnut crumble and raspberry confetti", "16", photos["Millefoglie Dello Chef"]),
+      item("Gelato Scoop", "vanilla, dark chocolate, pistachio and lemon sorbet", "8")
+    ];
+
+    const menus = {
+      allDay: {
+        notice: "All Day Menu",
+        sections: [
+          section("Salads", [
+            item("Sicilian Garden Salad", "mix garden salad with cherry tomato and orange wedges", "18", photos["Sicilian Garden Salad"], ["V"]),
+            item("Caesar Cetara Salad", "romain lettuce and croutons dressed with Leccino black olives, egg, Cetara anchovies, Worcestershire sauce, mustard, extra virgin olive oil, Parmigiano Reggiano", "24"),
+            item("Burrata Alla Puttanesca", "125gr of Puglia's burrata served with Leccino olives, rocket salad, cherry tomatoes and Cetara anchovies. +8 add Jamon Toscana ham 30 months old", "26"),
+            item("Insalata Di Polipo E Patate", "Atlantic octopus, baby potatoes, watercress, croutons, Leccino olives, lemon dressing", "38")
+          ]),
+          section("To Start", [
+            item("Focaccia", "traditional Neapolitan pizza bread", "6", photos["Focaccia"], ["V"]),
+            item("Polpette Della Nonna", "grandma homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
+            item("Parmigiana Di Melanzane", "slices of eggplants layered with tomato sauce, basil, Agerola fior di latte, Parmigiano Reggiano", "25", photos["Parmigiana Di Melanzane"], ["V"]),
+            item("Zuppa Di Cozze Di Tropea", "fresh mussels served with cherry tomatoes in white wine and 'nduja sauce", "29", photos["Zuppa Di Cozze Di Tropea"])
+          ]),
+          section("Fritti", [
+            item("Fritto Di Mare", "calamari, prawn, Amalfi coast fin fish, battered zucchini and garlic mayo", "26", photos["Fritto Di Mare"]),
+            item("Fritto Vegetariano", "potato mint croquettes, arancini porcini, eggplant polpette, butter arancini and arrabbiata sauce", "24", "", ["V"]),
+            item("Fritto Di Terra", "potato croquettes, butter arancini, ragu arancini (pork and beef), chicken pop and arrabbiata sauce", "24"),
+            item("Pizzette Fritte", "tris of fried mini Neapolitan pizza", "20")
+          ]),
+          section("Pizza", sharedPizza),
+          section("Pasta", [
+            item("Puttanesca Di Toto", "spaghetti with Cetara anchovies, sundry tomato, capers, Leccino olives and crunchy toasted bread", "29", photos["Puttanesca Di Toto"]),
+            item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiano Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
+            item("Orecchiette Alla Pugliese", "broccoli romanesco, Italian pork sausage, Leccino black olives and Cetara anchovies", "34"),
+            item("Ravioli Pomodoro E Burrata", "homemade spinach ricotta ravioli tomato sauce, fresh burrata and pesto", "36", photos["Ravioli Pomodoro E Burrata"], ["V"]),
+            item("Linguine Alle Vongole", "linguine with fresh Asari clams in white wine and signature bisque", "36"),
+            item("Ragu Della Portiera", "slow cooked mix of beef chuck, pork shoulder, Italian sausage with herbs, onion and tomato sauce", "36", photos["Ragu Della Portiera"]),
+            item("Linguine All'Aragosta", "linguine with special bisque sauce served with a whole lobster", "98", "", ["X2 pax"]),
+            item("Risotto Al Polpo E Nero Di Seppia", "carnaroli rice in squid ink sauce and Atlantic octopus in tomato concasse. Vegetarian option is available upon request", "42", photos["Risotto Al Polpo E Nero Di Seppia"])
+          ]),
+          section("Desserts", sharedDesserts)
+        ]
+      },
+      sunday: {
+        notice: "Sunday Menu",
+        sections: [
+          section("Salads", [
+            item("Sicilian Garden Salad", "mix garden salad with cherry tomato and orange wedges", "18", photos["Sicilian Garden Salad"], ["V"]),
+            item("Caesar Cetara Salad", "romain lettuce and croutons dressed with Leccino black olives, egg, Cetara anchovies, Worcestershire sauce, mustard, extra virgin olive oil, Parmigiano Reggiano", "24"),
+            item("Burrata Alla Puttanesca", "125gr of Puglia's burrata served with Leccino olives, rocket salad, cherry tomatoes and Cetara anchovies. +8 add Jamon Toscana ham 30 months old", "26"),
+            item("Insalata Di Polipo E Patate", "Atlantic octopus, baby potatoes, watercress, croutons, Leccino olives, lemon dressing", "38")
+          ]),
+          section("To Start", [
+            item("Focaccia", "traditional Neapolitan pizza bread", "6", photos["Focaccia"], ["V"]),
+            item("Parmigiana Di Melanzane", "slices of eggplants layered with tomato sauce, basil, Agerola fior di latte, Parmigiano Reggiano", "25", photos["Parmigiana Di Melanzane"], ["V"]),
+            item("Polpette Della Nonna", "grandma homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
+            item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiano Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
+            item("Tartare Di Manzo", "Argentine grass-fed tenderloin served with quail egg yolk, anchovies, mustard, capers, and rock salt", "38")
+          ]),
+          section("Pizza", sharedPizza),
+          section("Desserts", sharedDesserts),
+          section("Boozy Sunday Lunch", [
+            item("Aperol Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
+            item("Limoncello Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
+            item("Primitivo", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
+            item("Pinot Grigio", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
+            item("Prosecco Botter", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
+            item("Menabrea Beer", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"])
+          ])
+        ]
+      }
+    };
+
+    let currentMenu = "allDay";
+    let activeCategory = "";
+    let selectedCategoryLockUntil = 0;
+
+    const menuRoot = document.querySelector("#menuRoot");
+    const categoryNav = document.querySelector("#categoryNav");
+    const searchInput = document.querySelector("#searchInput");
+    const emptyState = document.querySelector("#emptyState");
+    const menuNotice = document.querySelector("#menuNotice");
+    const itemModal = document.querySelector("#itemModal");
+    const modalMedia = document.querySelector("#modalMedia");
+    const modalTitle = document.querySelector("#modalTitle");
+    const modalPrice = document.querySelector("#modalPrice");
+    const modalDesc = document.querySelector("#modalDesc");
+    const modalTags = document.querySelector("#modalTags");
+    const modalClose = document.querySelector("#modalClose");
+    let lastFocusedElement = null;
+
+    function item(name, description, price, image = "", tags = []) {
+      return { name, description, price, image, tags };
+    }
+
+    function section(name, items) {
+      return { name, items };
+    }
+
+    function slugify(value) {
+      return value.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+    }
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      }[char]));
+    }
+
+    function formatPrice(price) {
+      if (!price) return "";
+      return /^\d/.test(price) ? `$${price}` : price;
+    }
+
+    function itemMatches(menuItem, query) {
+      const haystack = `${menuItem.name} ${menuItem.description} ${menuItem.tags.join(" ")}`.toLowerCase();
+      return haystack.includes(query);
+    }
+
+    function render() {
+      const menu = menus[currentMenu];
+      const query = searchInput.value.trim().toLowerCase();
+      menuNotice.textContent = `${menu.notice} - sparkling and still filtered water free flow is $2 per guest.`;
+
+      const visibleSections = menu.sections
+        .map((menuSection) => ({
+          ...menuSection,
+          items: query ? menuSection.items.filter((menuItem) => itemMatches(menuItem, query)) : menuSection.items
+        }))
+        .filter((menuSection) => menuSection.items.length);
+
+      categoryNav.innerHTML = menu.sections.map((menuSection, index) => {
+        const id = `section-${slugify(menuSection.name)}`;
+        const active = activeCategory ? activeCategory === id : index === 0;
+        return `<button class="category-link ${active ? "is-active" : ""}" type="button" data-target="${id}">${escapeHtml(menuSection.name)}</button>`;
+      }).join("");
+
+      menuRoot.innerHTML = visibleSections.map((menuSection) => {
+        const id = `section-${slugify(menuSection.name)}`;
+        return `
+          <section class="category-section" id="${id}" data-category="${escapeHtml(menuSection.name)}">
+            <div class="section-heading">
+              <h2>${escapeHtml(menuSection.name)}</h2>
+              <span class="section-count">${menuSection.items.length} ${menuSection.items.length === 1 ? "item" : "items"}</span>
+            </div>
+            <div class="items-grid">
+              ${menuSection.items.map((menuItem) => renderItem(menuItem, menuSection.name)).join("")}
+            </div>
+          </section>
+        `;
+      }).join("");
+
+      emptyState.style.display = visibleSections.length ? "none" : "block";
+      observeSections();
+      requestAnimationFrame(keepActiveCategoryVisible);
+    }
+
+    function getItemId(sectionName, menuItem) {
+      return `${currentMenu}::${sectionName}::${menuItem.name}::${menuItem.price}`;
+    }
+
+    function getCurrentItems() {
+      return menus[currentMenu].sections.flatMap((menuSection) =>
+        menuSection.items.map((menuItem) => ({
+          ...menuItem,
+          section: menuSection.name,
+          id: getItemId(menuSection.name, menuItem)
+        }))
+      );
+    }
+
+    function renderItem(menuItem, sectionName) {
+      const media = menuItem.image
+        ? `<figure class="item-photo"><img src="${escapeHtml(menuItem.image)}" alt="${escapeHtml(menuItem.name)}" loading="lazy" width="360" height="270"></figure>`
+        : `<div class="placeholder" aria-label="No matching photo">No photo</div>`;
+      const tags = menuItem.tags.length
+        ? `<div class="item-tags">${menuItem.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>`
+        : "";
+      return `
+        <article class="menu-item" tabindex="0" role="button" aria-label="View details for ${escapeHtml(menuItem.name)}" data-item-id="${escapeHtml(getItemId(sectionName, menuItem))}">
+          ${media}
+          <div class="item-content">
+            <div class="item-top">
+              <h3 class="item-name">${escapeHtml(menuItem.name)}</h3>
+              <strong class="price">${escapeHtml(formatPrice(menuItem.price))}</strong>
+            </div>
+            <p class="desc">${escapeHtml(menuItem.description)}</p>
+            ${tags}
+          </div>
+        </article>
+      `;
+    }
+
+    function openItemModal(itemId) {
+      const menuItem = getCurrentItems().find((itemData) => itemData.id === itemId);
+      if (!menuItem) return;
+      lastFocusedElement = document.activeElement;
+      modalMedia.innerHTML = menuItem.image
+        ? `<img src="${escapeHtml(menuItem.image)}" alt="${escapeHtml(menuItem.name)}">`
+        : `<div class="placeholder" aria-label="No matching photo">No photo</div>`;
+      modalTitle.textContent = menuItem.name;
+      modalPrice.textContent = formatPrice(menuItem.price);
+      modalDesc.textContent = menuItem.description;
+      modalTags.innerHTML = menuItem.tags.map((tag) => {
+        const label = tag === "V" ? "Vegetarian" : tag;
+        return `<span class="tag">${escapeHtml(label)}</span>`;
+      }).join("");
+      itemModal.classList.add("is-open");
+      itemModal.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+      modalClose.focus();
+    }
+
+    function closeItemModal() {
+      itemModal.classList.remove("is-open");
+      itemModal.setAttribute("aria-hidden", "true");
+      document.body.style.overflow = "";
+      if (lastFocusedElement) lastFocusedElement.focus();
+    }
+
+    let sectionObserver;
+    function observeSections() {
+      if (sectionObserver) sectionObserver.disconnect();
+      const sections = [...document.querySelectorAll(".category-section")];
+      sectionObserver = new IntersectionObserver((entries) => {
+        if (Date.now() < selectedCategoryLockUntil) return;
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (!visible) return;
+        activeCategory = visible.target.id;
+        updateCategoryButtons();
+        keepActiveCategoryVisible();
+      }, { rootMargin: "-45% 0px -50% 0px", threshold: [0, 0.2, 0.6] });
+      sections.forEach((sectionElement) => sectionObserver.observe(sectionElement));
+    }
+
+    function updateCategoryButtons() {
+      document.querySelectorAll(".category-link").forEach((button) => {
+        button.classList.toggle("is-active", button.dataset.target === activeCategory);
+      });
+    }
+
+    function keepActiveCategoryVisible() {
+      const activeButton = categoryNav.querySelector(".category-link.is-active");
+      if (!activeButton) return;
+      const navBox = categoryNav.getBoundingClientRect();
+      const buttonBox = activeButton.getBoundingClientRect();
+      const isOutsideLeft = buttonBox.left < navBox.left + 8;
+      const isOutsideRight = buttonBox.right > navBox.right - 34;
+      if (isOutsideLeft || isOutsideRight) {
+        activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+      }
+    }
+
+    document.querySelector(".menu-switch").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-menu]");
+      if (!button) return;
+      currentMenu = button.dataset.menu;
+      activeCategory = "";
+      document.querySelectorAll(".switch-button").forEach((switchButton) => {
+        switchButton.setAttribute("aria-pressed", String(switchButton === button));
+      });
+      searchInput.value = "";
+      render();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    categoryNav.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-target]");
+      if (!button) return;
+      const target = document.getElementById(button.dataset.target);
+      activeCategory = button.dataset.target;
+      selectedCategoryLockUntil = Date.now() + 900;
+      updateCategoryButtons();
+      keepActiveCategoryVisible();
+      if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    menuRoot.addEventListener("click", (event) => {
+      const card = event.target.closest(".menu-item");
+      if (card) openItemModal(card.dataset.itemId);
+    });
+
+    menuRoot.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      const card = event.target.closest(".menu-item");
+      if (!card) return;
+      event.preventDefault();
+      openItemModal(card.dataset.itemId);
+    });
+
+    modalClose.addEventListener("click", closeItemModal);
+
+    itemModal.addEventListener("click", (event) => {
+      if (event.target === itemModal) closeItemModal();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && itemModal.classList.contains("is-open")) {
+        closeItemModal();
+      }
+    });
+
+    searchInput.addEventListener("input", () => {
+      activeCategory = "";
+      render();
+    });
+
+    render();
+  </script>
+</body>
+</html>
