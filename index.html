@@ -650,14 +650,14 @@
       "Focaccia": "assets/menu-photos/focaccia.jpg",
       "Friarielli & Salsiccia": "assets/menu-photos/friarielli-salsiccia.jpg",
       "Fritto Di Mare": "assets/menu-photos/fritto-di-mare.jpg",
-      "Sicilian Garden Salad": "assets/menu-photos/garden-salad.jpg",
+      "Sicilian Garden Salad": "assets/menu-photos/garden-salad.png",
       "Lasagna Napoletana": "assets/menu-photos/lasagna-napoletana.jpg",
       "Margherita": "assets/menu-photos/margherita.jpg",
       "Marinara": "assets/menu-photos/marinara.jpg",
       "Marita": "assets/menu-photos/marita.jpg",
       "Millefoglie Dello Chef": "assets/menu-photos/millefoglie-dello-chef.jpg",
       "Ortolana": "assets/menu-photos/ortolana.jpg",
-      "Panna Cotta": "assets/menu-photos/panna-cotta.jpg",
+      "Panna Cotta": "assets/menu-photos/panacotta.png",
       "Parmigiana Di Melanzane": "assets/menu-photos/parmigiana-di-melanzane.jpg",
       "Polpette Della Nonna": "assets/menu-photos/polpette-della-nonna.jpg",
       "Prosciutto & Funghi": "assets/menu-photos/prosciutto-funghi.jpg",
@@ -677,7 +677,6 @@
       item("Cosacca", "tomato sauce, pecorino Romano DOP", "26", photos["Cosacca"], ["V", "Le Classiche"]),
       item("Margherita", "tomato sauce, pecorino Romano DOP, Agerola fior di latte, fresh basil", "28", photos["Margherita"], ["V", "Le Classiche"]),
       item("Marita", "half marinara / half margherita", "28", photos["Marita"], ["V", "Le Classiche"]),
-      item("Calzone Fritto", "fried calzone stuffed with Agerola smoked provola cheese, salame Napoli, ricotta, black pepper, basil, served with rocket salad and tomato sauce", "58", photos["Calzone Fritto"], ["Le Classiche"]),
       item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
       item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
       item("Toscana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "34", photos["Toscana"], ["Le Rosse"]),
@@ -754,7 +753,27 @@
             item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiano Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
             item("Tartare Di Manzo", "Argentine grass-fed tenderloin served with quail egg yolk, anchovies, mustard, capers, and rock salt", "38")
           ]),
-          section("Pizza", sharedPizza),
+          section("Pizza", [
+            item("Marinara", "tomato sauce, garlic, oregano", "23", photos["Marinara"], ["V", "Le Classiche"]),
+            item("Cosacca", "tomato sauce, pecorino Romano DOP", "26", photos["Cosacca"], ["V", "Le Classiche"]),
+            item("Margherita", "tomato sauce, pecorino Romano DOP, Agerola fior di latte, fresh basil", "28", photos["Margherita"], ["V", "Le Classiche"]),
+            item("Marita", "half marinara / half margherita", "28", photos["Marita"], ["V", "Le Classiche"]),
+            item("Calzone Fritto", "fried calzone stuffed with Agerola smoked provola cheese, salame Napoli, ricotta, black pepper, basil, served with rocket salad and tomato sauce", "58", photos["Calzone Fritto"], ["Le Classiche"]),
+            item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
+            item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
+            item("Toscana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "34", photos["Toscana"], ["Le Rosse"]),
+            item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
+            item("Tonno & Cipolla", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion", "32", "", ["Le Bianche"]),
+            item("Prosciutto & Funghi", "Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
+            item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
+            item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
+            item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
+            item("Burrata & Capocollo", "Agerola fior di latte, black Leccino olives, sundry tomato, capocollo di Martina Franca, pecorino Romano DOP, 125gr of Puglia's burrata", "40", photos["Capocollo"], ["Le Bianche"]),
+            item("Capricciosa", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms, Leccino olives, artichoke", "36", photos["Capricciosa"], ["Le Rosse"]),
+            item("Truffle Porcini", "Agerola fior di latte, porcini mushroom, truffle pate, pecorino Romano DOP", "40", photos["Truffle Porcini"], ["V", "Le Bianche"]),
+            item("Bufalina", "tomato sauce, buffalo mozzarella, basil, pecorino Romano DOP", "36", photos["Bufalina"], ["V", "Le Rosse"]),
+            item("Special Of The Day", "Kindly approach our friendly staff", "", "", [])
+          ]),
           section("Desserts", sharedDesserts),
           section("Boozy Sunday Lunch", [
             item("Aperol Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
@@ -763,6 +782,7 @@
             item("Pinot Grigio", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
             item("Prosecco Botter", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
             item("Menabrea Beer", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"])
+            
           ])
         ]
       }
@@ -810,7 +830,7 @@
 
     function formatPrice(price) {
       if (!price) return "";
-      return /^\d/.test(price) ? `$${price}` : price;
+      return price;
     }
 
     function itemMatches(menuItem, query) {
