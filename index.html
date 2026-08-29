@@ -330,13 +330,15 @@
     .placeholder {
       display: grid;
       place-items: center;
-      border: 1px dashed rgba(85, 98, 75, 0.45);
-      color: var(--olive);
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 0.8rem;
-      font-weight: 800;
-      text-align: center;
-      text-transform: uppercase;
+      padding: 12px;
+      border: 1px solid rgba(85, 98, 75, 0.18);
+    }
+
+    .placeholder img {
+      display: block;
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     .item-content {
@@ -447,6 +449,12 @@
       border-radius: 0;
       border-left: 0;
       border-right: 0;
+    }
+
+    .modal-media .placeholder img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: contain;
     }
 
     .modal-body {
@@ -641,30 +649,35 @@
     const photos = {
       "4 Cheese": "assets/menu-photos/4-cheese.jpg",
       "Bufalina": "assets/menu-photos/bufalina.jpg",
+      "Burrata Alla Puttanesca": "assets/menu-photos/Burrata-ala-puttanesca.jpg",
       "Calzone Fritto": "assets/menu-photos/calzone-fritto.jpg",
       "Capocollo": "assets/menu-photos/capocollo.jpg",
       "Capricciosa": "assets/menu-photos/capricciosa.jpg",
-      "Cetara": "assets/menu-photos/cetara.jpg",
+      "Caesar Cetara Salad": "assets/menu-photos/caesar-cetara-salad.jpg",
+      "Cetara": "assets/menu-photos/cetara-pizza.jpg",
       "Cosacca": "assets/menu-photos/cosacca.jpg",
       "Diavola": "assets/menu-photos/diavola.jpg",
       "Focaccia": "assets/menu-photos/focaccia.jpg",
       "Friarielli & Salsiccia": "assets/menu-photos/friarielli-salsiccia.jpg",
       "Fritto Di Mare": "assets/menu-photos/fritto-di-mare.jpg",
       "Sicilian Garden Salad": "assets/menu-photos/garden-salad.png",
+      "Insalata Di Polipo E Patate": "assets/menu-photos/insalata-di-polipo-e-patate.jpg",
       "Lasagna Napoletana": "assets/menu-photos/lasagna-napoletana.jpg",
+      "Linguine Alle Vongole": "assets/menu-photos/linguine-alle-vongole.jpg",
       "Margherita": "assets/menu-photos/margherita.jpg",
       "Marinara": "assets/menu-photos/marinara.jpg",
       "Marita": "assets/menu-photos/marita.jpg",
       "Millefoglie Dello Chef": "assets/menu-photos/millefoglie-dello-chef.jpg",
+      "Orecchiette Alla Pugliese": "assets/menu-photos/orecchiette-alla-pugliese.jpg",
       "Ortolana": "assets/menu-photos/ortolana.jpg",
       "Panna Cotta": "assets/menu-photos/panacotta.png",
       "Parmigiana Di Melanzane": "assets/menu-photos/parmigiana-di-melanzane.jpg",
+      "Pizzette Fritte": "assets/menu-photos/pizzette-fritte.jpg",
       "Polpette Della Nonna": "assets/menu-photos/polpette-della-nonna.jpg",
       "Prosciutto & Funghi": "assets/menu-photos/prosciutto-funghi.jpg",
       "Provola & Pepe": "assets/menu-photos/provola-pepe.jpg",
-      "Puttanesca Di Toto": "assets/menu-photos/puttanesca-di-toto.jpg",
       "Ragu Della Portiera": "assets/menu-photos/ragu-della-portiera.jpg",
-      "Ravioli Pomodoro E Burrata": "assets/menu-photos/ravioli-pomodoro-burrata.jpg",
+      "Ravioli Pomodoro E Stracciatella": "assets/menu-photos/ravioli-pomodoro-stracciatella.jpg",
       "Risotto Al Polpo E Nero Di Seppia": "assets/menu-photos/risotto-polpo-nero-seppia.jpg",
       "Classic Tiramisu": "assets/menu-photos/tiramisu.jpg",
       "Toscana": "assets/menu-photos/toscana.jpg",
@@ -679,10 +692,10 @@
       item("Marita", "half marinara / half margherita", "28", photos["Marita"], ["V", "Le Classiche"]),
       item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
       item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
-      item("Toscana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "34", photos["Toscana"], ["Le Rosse"]),
+      item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
       item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
-      item("Tonno & Cipolla", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion", "32", "", ["Le Bianche"]),
-      item("Prosciutto & Funghi", "Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
+      item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", "", ["Le Bianche"]),
+      item("Prosciutto & Funghi", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
       item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
       item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
       item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
@@ -694,7 +707,7 @@
     ];
 
     const sharedDesserts = [
-      item("Affogato", "a classic Italian coffee-based dessert featuring a scoop of ice cream drowned in a shot of hot espresso", "12"),
+      item("Affogato", "a classic Italian coffee-based dessert featuring a scoop of ice cream drowned in a shot of hot espresso", "12", "assets/menu-photos/affogato.jpg"),
       item("Panna Cotta", "classic Italian custard accompanied by a wild medley of berries", "14", photos["Panna Cotta"]),
       item("Classic Tiramisu", "espresso, mascarpone, savoiardi biscuits and coffee liquor", "15", photos["Classic Tiramisu"]),
       item("Millefoglie Dello Chef", "deconstructed millefoglie, white chocolate namelaka cream, Amarena cherry, hazelnut crumble and raspberry confetti", "16", photos["Millefoglie Dello Chef"]),
@@ -706,14 +719,14 @@
         notice: "All Day Menu",
         sections: [
           section("Salads", [
-            item("Sicilian Garden Salad", "mix garden salad with cherry tomato and orange wedges", "18", photos["Sicilian Garden Salad"], ["V"]),
-            item("Caesar Cetara Salad", "romain lettuce and croutons dressed with Leccino black olives, egg, Cetara anchovies, Worcestershire sauce, mustard, extra virgin olive oil, Parmigiano Reggiano", "24"),
-            item("Burrata Alla Puttanesca", "125gr of Puglia's burrata served with Leccino olives, rocket salad, cherry tomatoes and Cetara anchovies. +8 add Jamon Toscana ham 30 months old", "26"),
-            item("Insalata Di Polipo E Patate", "Atlantic octopus, baby potatoes, watercress, croutons, Leccino olives, lemon dressing", "38")
+            item("Sicilian Garden Salad", "mix garden salad with cherry tomato, Leccino black olives and orange wedges", "18", photos["Sicilian Garden Salad"], ["V"]),
+            item("Caesar Cetara Salad", "romaine lettuce and croutons dressed with Leccino black olives, egg, Cetara anchovies, Worcestershire sauce, mustard, extra virgin olive oil, Parmigiano Reggiano", "24", photos["Caesar Cetara Salad"]),
+            item("Burrata Alla Puttanesca", "125gr of Puglia's burrata served with Leccino olives, rocket salad, cherry tomatoes and Cetara anchovies. +8 add Viani Toscana ham 30 months old", "26", photos["Burrata Alla Puttanesca"]),
+            item("Insalata Di Polipo E Patate", "Atlantic octopus, baby potatoes, watercress, croutons, Leccino olives, lemon dressing", "38", photos["Insalata Di Polipo E Patate"])
           ]),
           section("To Start", [
             item("Focaccia", "traditional Neapolitan pizza bread", "6", photos["Focaccia"], ["V"]),
-            item("Polpette Della Nonna", "grandma homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
+            item("Polpette Della Nonna", "grandma's homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
             item("Parmigiana Di Melanzane", "slices of eggplants layered with tomato sauce, basil, Agerola fior di latte, Parmigiano Reggiano", "25", photos["Parmigiana Di Melanzane"], ["V"]),
             item("Zuppa Di Cozze Di Tropea", "fresh mussels served with cherry tomatoes in white wine and 'nduja sauce", "29", photos["Zuppa Di Cozze Di Tropea"])
           ]),
@@ -721,16 +734,16 @@
             item("Fritto Di Mare", "calamari, prawn, Amalfi coast fin fish, battered zucchini and garlic mayo", "26", photos["Fritto Di Mare"]),
             item("Fritto Vegetariano", "potato mint croquettes, arancini porcini, eggplant polpette, butter arancini and arrabbiata sauce", "24", "", ["V"]),
             item("Fritto Di Terra", "potato croquettes, butter arancini, ragu arancini (pork and beef), chicken pop and arrabbiata sauce", "24"),
-            item("Pizzette Fritte", "tris of fried mini Neapolitan pizza", "20")
+            item("Pizzette Fritte", "tris of fried mini Neapolitan pizza", "20", photos["Pizzette Fritte"])
           ]),
           section("Pizza", sharedPizza),
           section("Pasta", [
-            item("Puttanesca Di Toto", "spaghetti with Cetara anchovies, sundry tomato, capers, Leccino olives and crunchy toasted bread", "29", photos["Puttanesca Di Toto"]),
-            item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiano Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
-            item("Orecchiette Alla Pugliese", "broccoli romanesco, Italian pork sausage, Leccino black olives and Cetara anchovies", "34"),
-            item("Ravioli Pomodoro E Burrata", "homemade spinach ricotta ravioli tomato sauce, fresh burrata and pesto", "36", photos["Ravioli Pomodoro E Burrata"], ["V"]),
-            item("Linguine Alle Vongole", "linguine with fresh Asari clams in white wine and signature bisque", "36"),
-            item("Ragu Della Portiera", "slow cooked mix of beef chuck, pork shoulder, Italian sausage with herbs, onion and tomato sauce", "36", photos["Ragu Della Portiera"]),
+            item("Puttanesca Di Totò", "spaghetti with Cetara anchovies, sundry tomato, capers, Leccino olives and crunchy toasted bread", "29"),
+            item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiana Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
+            item("Orecchiette Alla Pugliese", "broccoli romanesco, Italian pork sausage, Leccino black olives and Cetara anchovies", "34", photos["Orecchiette Alla Pugliese"]),
+            item("Ravioli Pomodoro E Stracciatella", "homemade spinach ricotta ravioli, tomato sauce, stracciatella and pesto", "36", photos["Ravioli Pomodoro E Stracciatella"], ["V"]),
+            item("Linguine Alla Vongole", "mancini linguine with fresh Asari clams in traditional Mediterranean sauce (contains wine and shellfish)", "36", photos["Linguine Alle Vongole"]),
+            item("Ragu Della Portiera", "handmade pappardelle, slow cooked mix of beef cheek, pork shoulder, Italian sausage with herbs, onion and tomato sauce", "36", photos["Ragu Della Portiera"]),
             item("Linguine All'Aragosta", "linguine with special bisque sauce served with a whole lobster", "98", "", ["X2 pax"]),
             item("Risotto Al Polpo E Nero Di Seppia", "carnaroli rice in squid ink sauce and Atlantic octopus in tomato concasse. Vegetarian option is available upon request", "42", photos["Risotto Al Polpo E Nero Di Seppia"])
           ]),
@@ -741,16 +754,16 @@
         notice: "Sunday Menu",
         sections: [
           section("Salads", [
-            item("Sicilian Garden Salad", "mix garden salad with cherry tomato and orange wedges", "18", photos["Sicilian Garden Salad"], ["V"]),
-            item("Caesar Cetara Salad", "romain lettuce and croutons dressed with Leccino black olives, egg, Cetara anchovies, Worcestershire sauce, mustard, extra virgin olive oil, Parmigiano Reggiano", "24"),
-            item("Burrata Alla Puttanesca", "125gr of Puglia's burrata served with Leccino olives, rocket salad, cherry tomatoes and Cetara anchovies. +8 add Jamon Toscana ham 30 months old", "26"),
-            item("Insalata Di Polipo E Patate", "Atlantic octopus, baby potatoes, watercress, croutons, Leccino olives, lemon dressing", "38")
+            item("Sicilian Garden Salad", "mix garden salad with cherry tomato, Leccino black olives and orange wedges", "18", photos["Sicilian Garden Salad"], ["V"]),
+            item("Caesar Cetara Salad", "romaine lettuce and croutons dressed with Leccino black olives, egg, Cetara anchovies, Worcestershire sauce, mustard, extra virgin olive oil, Parmigiano Reggiano", "24", photos["Caesar Cetara Salad"]),
+            item("Burrata Alla Puttanesca", "125gr of Puglia's burrata served with Leccino olives, rocket salad, cherry tomatoes and Cetara anchovies. +8 add Viani Toscana ham 30 months old", "26", photos["Burrata Alla Puttanesca"]),
+            item("Insalata Di Polipo E Patate", "Atlantic octopus, baby potatoes, watercress, croutons, Leccino olives, lemon dressing", "38", photos["Insalata Di Polipo E Patate"])
           ]),
           section("To Start", [
             item("Focaccia", "traditional Neapolitan pizza bread", "6", photos["Focaccia"], ["V"]),
             item("Parmigiana Di Melanzane", "slices of eggplants layered with tomato sauce, basil, Agerola fior di latte, Parmigiano Reggiano", "25", photos["Parmigiana Di Melanzane"], ["V"]),
-            item("Polpette Della Nonna", "grandma homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
-            item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiano Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
+            item("Polpette Della Nonna", "grandma's homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
+            item("Lasagna Napoletana", "homemade egg pasta layered with tomato sauce, beef meatballs, pork Italian sausage, Agerola fior di latte, Parmigiana Reggiano, smoked ricotta", "34", photos["Lasagna Napoletana"]),
             item("Tartare Di Manzo", "Argentine grass-fed tenderloin served with quail egg yolk, anchovies, mustard, capers, and rock salt", "38")
           ]),
           section("Pizza", [
@@ -761,10 +774,10 @@
             item("Calzone Fritto", "fried calzone stuffed with Agerola smoked provola cheese, salame Napoli, ricotta, black pepper, basil, served with rocket salad and tomato sauce", "58", photos["Calzone Fritto"], ["Le Classiche"]),
             item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
             item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
-            item("Toscana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "34", photos["Toscana"], ["Le Rosse"]),
+            item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
             item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
-            item("Tonno & Cipolla", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion", "32", "", ["Le Bianche"]),
-            item("Prosciutto & Funghi", "Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
+            item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", "", ["Le Bianche"]),
+            item("Prosciutto & Funghi", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
             item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
             item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
             item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
@@ -776,12 +789,12 @@
           ]),
           section("Desserts", sharedDesserts),
           section("Boozy Sunday Lunch", [
-            item("Aperol Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
-            item("Limoncello Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
-            item("Primitivo", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
-            item("Pinot Grigio", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
-            item("Prosecco Botter", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"]),
-            item("Menabrea Beer", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["2 hour"])
+            item("Aperol Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["1.5 hour"]),
+            item("Limoncello Spritz", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["1.5 hour"]),
+            item("Primitivo", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["1.5 hour"]),
+            item("Pinot Grigio", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["1.5 hour"]),
+            item("Prosecco Botter", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["1.5 hour"]),
+            item("Menabrea Beer", "Sunday lunch drinks option. Terms and conditions apply", "Add 48++", "", ["1.5 hour"])
             
           ])
         ]
@@ -893,7 +906,7 @@
     function renderItem(menuItem, sectionName) {
       const media = menuItem.image
         ? `<figure class="item-photo"><img src="${escapeHtml(menuItem.image)}" alt="${escapeHtml(menuItem.name)}" loading="lazy" width="360" height="270"></figure>`
-        : `<div class="placeholder" aria-label="No matching photo">No photo</div>`;
+        : `<div class="placeholder" aria-label="Da Michele logo"><img src="da michele logo 1 transparent.png" alt="Da Michele"></div>`;
       const tags = menuItem.tags.length
         ? `<div class="item-tags">${menuItem.tags.map((tag) => `<span class="tag">${escapeHtml(tag)}</span>`).join("")}</div>`
         : "";
@@ -918,7 +931,7 @@
       lastFocusedElement = document.activeElement;
       modalMedia.innerHTML = menuItem.image
         ? `<img src="${escapeHtml(menuItem.image)}" alt="${escapeHtml(menuItem.name)}">`
-        : `<div class="placeholder" aria-label="No matching photo">No photo</div>`;
+        : `<div class="placeholder" aria-label="Da Michele logo"><img src="da michele logo 1 transparent.png" alt="Da Michele"></div>`;
       modalTitle.textContent = menuItem.name;
       modalPrice.textContent = formatPrice(menuItem.price);
       modalDesc.textContent = menuItem.description;
