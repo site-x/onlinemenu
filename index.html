@@ -130,6 +130,13 @@
       box-shadow: 0 4px 12px rgba(135, 42, 29, 0.22);
     }
 
+    .search-filter-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 8px;
+      align-items: stretch;
+    }
+
     .search-row {
       position: relative;
       margin-bottom: 0;
@@ -148,9 +155,57 @@
       outline: none;
     }
 
+    .search-row input::placeholder {
+      color: transparent;
+    }
+
     .search-row input:focus {
       border-color: var(--brand);
       box-shadow: 0 0 0 3px rgba(179, 58, 37, 0.15);
+    }
+
+    .search-hint {
+      position: absolute;
+      left: 16px;
+      right: 46px;
+      top: 50%;
+      overflow: hidden;
+      transform: translateY(-50%);
+      color: rgba(102, 89, 79, 0.78);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1rem;
+      line-height: 1;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .search-hint-text {
+      display: inline-block;
+    }
+
+    .search-row.has-value .search-hint,
+    .search-row:focus-within .search-hint {
+      display: none;
+    }
+
+    .search-row.is-hint-overflowing .search-hint-text {
+      animation: searchHintScroll 6.5s ease-in-out infinite;
+    }
+
+    @keyframes searchHintScroll {
+      0%,
+      18% {
+        transform: translateX(0);
+      }
+
+      52%,
+      70% {
+        transform: translateX(calc(-1 * var(--hint-overflow, 0px)));
+      }
+
+      100% {
+        transform: translateX(0);
+      }
     }
 
     .search-icon {
@@ -162,6 +217,26 @@
       transform: translateY(-50%);
       color: var(--brand-dark);
       pointer-events: none;
+    }
+
+    .filter-select {
+      min-height: 46px;
+      width: 118px;
+      padding: 10px 28px 10px 10px;
+      border: 1px solid rgba(36, 27, 22, 0.25);
+      border-radius: 8px;
+      background: #fffdf8;
+      color: var(--brand-dark);
+      cursor: pointer;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.88rem;
+      font-weight: 800;
+      outline: none;
+    }
+
+    .filter-select:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(179, 58, 37, 0.15);
     }
 
     .category-strip {
@@ -240,6 +315,11 @@
       color: #fffdf8;
     }
 
+    .category-link.clear-filter {
+      border-color: rgba(179, 58, 37, 0.32);
+      color: var(--brand-dark);
+    }
+
     main {
       width: min(100%, 1120px);
       margin: 0 auto;
@@ -288,6 +368,45 @@
     }
 
     .items-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .pizza-groups {
+      display: grid;
+      gap: 16px;
+    }
+
+    .pizza-classiche,
+    .pizza-specials {
+      display: grid;
+      gap: 12px;
+    }
+
+    .pizza-style-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .pizza-style-column {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .pizza-style-title {
+      margin: 0;
+      padding: 0 0 7px;
+      border-bottom: 1px solid rgba(179, 58, 37, 0.28);
+      color: var(--brand-dark);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.84rem;
+      font-weight: 900;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .pizza-style-items {
       display: grid;
       gap: 12px;
     }
@@ -343,6 +462,9 @@
 
     .item-content {
       min-width: 0;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
       padding: 1px 0;
     }
 
@@ -351,7 +473,7 @@
       grid-template-columns: minmax(0, 1fr) auto;
       gap: 10px;
       align-items: baseline;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
 
     .item-name {
@@ -364,16 +486,16 @@
       display: flex;
       flex-wrap: wrap;
       gap: 5px;
-      margin-top: 6px;
+      margin: 0 0 5px;
     }
 
     .tag {
-      padding: 3px 7px;
+      padding: 2px 6px;
       border-radius: 999px;
       background: rgba(85, 98, 75, 0.12);
       color: var(--olive);
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 800;
       text-transform: uppercase;
     }
@@ -392,6 +514,14 @@
       font-family: Arial, Helvetica, sans-serif;
       font-size: 0.98rem;
       line-height: 1.42;
+    }
+
+    .menu-item .desc {
+      display: -webkit-box;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow-wrap: anywhere;
     }
 
     .empty-state {
@@ -521,6 +651,36 @@
       text-align: center;
     }
 
+    .scroll-top {
+      position: fixed;
+      right: 14px;
+      bottom: 14px;
+      z-index: 20;
+      display: grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--brand);
+      color: #fffdf8;
+      box-shadow: 0 8px 20px rgba(55, 39, 25, 0.22);
+      cursor: pointer;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 900;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px);
+      transition: opacity 160ms ease, transform 160ms ease;
+    }
+
+    .scroll-top.is-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
     @media (min-width: 720px) {
       html {
         scroll-padding-top: 78px;
@@ -544,7 +704,7 @@
         margin: 0;
       }
 
-      .search-row {
+      .search-filter-row {
         grid-area: search;
         margin: 0;
       }
@@ -562,8 +722,24 @@
         gap: 14px;
       }
 
+      .pizza-style-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .pizza-classiche {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+      }
+
       .menu-item {
         grid-template-columns: 118px minmax(0, 1fr);
+        min-height: 142px;
+      }
+
+      .menu-item .desc {
+        display: block;
+        overflow: visible;
+        -webkit-line-clamp: unset;
       }
 
       .item-photo,
@@ -603,13 +779,25 @@
         <button class="switch-button" type="button" data-menu="allDay" aria-pressed="true">All Day</button>
         <button class="switch-button" type="button" data-menu="sunday" aria-pressed="false">Sunday</button>
       </div>
-      <label class="search-row">
-        <span class="sr-only">Search dishes</span>
-        <input id="searchInput" type="search" placeholder="Search dishes or ingredients" autocomplete="off">
-        <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
-          <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-      </label>
+      <div class="search-filter-row">
+        <label class="search-row">
+          <span class="sr-only">Search dishes</span>
+          <input id="searchInput" type="search" placeholder="Search dishes or ingredients" autocomplete="off">
+          <span class="search-hint" aria-hidden="true"><span class="search-hint-text" id="searchHintText">Search dishes or ingredients</span></span>
+          <svg class="search-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none">
+            <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </label>
+        <label>
+          <span class="sr-only">Filter menu</span>
+          <select class="filter-select" id="filterSelect">
+            <option value="default">Filter</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="vegetarian">Vegetarian</option>
+          </select>
+        </label>
+      </div>
     </div>
   </section>
   <div class="category-strip">
@@ -644,6 +832,7 @@
       </div>
     </div>
   </div>
+  <button class="scroll-top" type="button" id="scrollTopButton" aria-label="Scroll to top">↑</button>
 
   <script>
     const photos = {
@@ -697,11 +886,11 @@
       item("Margherita", "tomato sauce, pecorino Romano DOP, Agerola fior di latte, fresh basil", "28", photos["Margherita"], ["V", "Le Classiche"]),
       item("Marita", "half marinara / half margherita", "28", photos["Marita"], ["V", "Le Classiche"]),
       item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
+      item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", photos["Tonno & Cipolla"], ["Le Bianche"]),
       item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
       item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
       item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
       item("Prosciutto & Funghi", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
-      item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", photos["Tonno & Cipolla"], ["Le Bianche"]),
       item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
       item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
       item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
@@ -732,15 +921,15 @@
           ]),
           section("To Start", [
             item("Focaccia", "traditional Neapolitan pizza bread", "6", photos["Focaccia"], ["V"]),
-            item("Polpette Della Nonna", "grandma's homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
             item("Parmigiana Di Melanzane", "slices of eggplants layered with tomato sauce, basil, Agerola fior di latte, Parmigiano Reggiano", "25", photos["Parmigiana Di Melanzane"], ["V"]),
+            item("Polpette Della Nonna", "grandma's homemade wagyu beef meatballs in tomato sauce and Parmigiano Reggiano", "26", photos["Polpette Della Nonna"]),
             item("Zuppa Di Cozze Di Tropea", "fresh mussels served with cherry tomatoes in white wine and 'nduja sauce", "29", photos["Zuppa Di Cozze Di Tropea"])
           ]),
           section("Fritti", [
-            item("Fritto Di Mare", "calamari, prawn, Amalfi coast fin fish, battered zucchini and garlic mayo", "26", photos["Fritto Di Mare"]),
+            item("Pizzette Fritte", "tris of fried mini Neapolitan pizza", "20", photos["Pizzette Fritte"]),
             item("Fritto Vegetariano", "potato mint croquettes, arancini porcini, eggplant polpette, butter arancini and arrabbiata sauce", "24", photos["Fritto Vegetariano"], ["V"]),
             item("Fritto Di Terra", "potato croquettes, butter arancini, ragu arancini (pork and beef), chicken pop and arrabbiata sauce", "24", photos["Fritto Di Terra"]),
-            item("Pizzette Fritte", "tris of fried mini Neapolitan pizza", "20", photos["Pizzette Fritte"])
+            item("Fritto Di Mare", "calamari, prawn, Amalfi coast fin fish, battered zucchini and garlic mayo", "26", photos["Fritto Di Mare"])
           ]),
           section("Pizza", sharedPizza),
           section("Pasta", [
@@ -779,11 +968,11 @@
             item("Marita", "half marinara / half margherita", "28", photos["Marita"], ["V", "Le Classiche"]),
             item("Calzone Fritto", "fried calzone stuffed with Agerola smoked provola cheese, salame Napoli, ricotta, black pepper, basil, served with rocket salad and tomato sauce", "58", photos["Calzone Fritto"], ["Le Classiche"]),
             item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
+            item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", photos["Tonno & Cipolla"], ["Le Bianche"]),
             item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
             item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
             item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
             item("Prosciutto & Funghi", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
-            item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", photos["Tonno & Cipolla"], ["Le Bianche"]),
             item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
             item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
             item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
@@ -814,6 +1003,9 @@
     const menuRoot = document.querySelector("#menuRoot");
     const categoryNav = document.querySelector("#categoryNav");
     const searchInput = document.querySelector("#searchInput");
+    const searchRow = document.querySelector(".search-row");
+    const searchHintText = document.querySelector("#searchHintText");
+    const filterSelect = document.querySelector("#filterSelect");
     const emptyState = document.querySelector("#emptyState");
     const menuNotice = document.querySelector("#menuNotice");
     const itemModal = document.querySelector("#itemModal");
@@ -823,6 +1015,7 @@
     const modalDesc = document.querySelector("#modalDesc");
     const modalTags = document.querySelector("#modalTags");
     const modalClose = document.querySelector("#modalClose");
+    const scrollTopButton = document.querySelector("#scrollTopButton");
     let lastFocusedElement = null;
 
     function item(name, description, price, image = "", tags = []) {
@@ -852,40 +1045,106 @@
       return price;
     }
 
+    function getNumericPrice(price) {
+      const match = String(price).match(/\d+(?:\.\d+)?/);
+      return match ? Number(match[0]) : Number.NaN;
+    }
+
+    function getSortablePrice(price) {
+      const numericPrice = getNumericPrice(price);
+      return Number.isFinite(numericPrice) ? numericPrice : Number.POSITIVE_INFINITY;
+    }
+
     function itemMatches(menuItem, query) {
-      const haystack = `${menuItem.name} ${menuItem.description} ${menuItem.tags.join(" ")}`.toLowerCase();
+      const hiddenKeywords = [
+        menuItem.tags.includes("Le Bianche") ? "Cheese Cheese Base Cheese Based" : "",
+        menuItem.tags.includes("Le Rosse") ? "Tomato Tomato Base Tomato Based" : ""
+      ].join(" ");
+      const haystack = `${menuItem.name} ${menuItem.description} ${menuItem.tags.join(" ")} ${hiddenKeywords}`.toLowerCase();
       return haystack.includes(query);
+    }
+
+    function updateSearchHint() {
+      searchRow.classList.toggle("has-value", Boolean(searchInput.value));
+      const hintBox = searchHintText.parentElement;
+      const overflow = Math.ceil(searchHintText.scrollWidth - hintBox.clientWidth);
+      searchRow.classList.toggle("is-hint-overflowing", overflow > 0);
+      searchRow.style.setProperty("--hint-overflow", `${Math.max(0, overflow)}px`);
+    }
+
+    function itemPassesFilter(menuItem) {
+      return filterSelect.value !== "vegetarian" || menuItem.tags.includes("V");
+    }
+
+    function sortItems(items) {
+      const sortedItems = [...items];
+      if (filterSelect.value === "price-asc") {
+        sortedItems.sort((a, b) => getSortablePrice(a.price) - getSortablePrice(b.price) || a.name.localeCompare(b.name));
+      } else if (filterSelect.value === "price-desc") {
+        sortedItems.sort((a, b) => {
+          const priceA = getNumericPrice(a.price);
+          const priceB = getNumericPrice(b.price);
+          if (!Number.isFinite(priceA) && !Number.isFinite(priceB)) return a.name.localeCompare(b.name);
+          if (!Number.isFinite(priceA)) return 1;
+          if (!Number.isFinite(priceB)) return -1;
+          return priceB - priceA || a.name.localeCompare(b.name);
+        });
+      }
+      return sortedItems;
+    }
+
+    function sortByPrice(items) {
+      return [...items].sort((a, b) => getSortablePrice(a.price) - getSortablePrice(b.price) || a.name.localeCompare(b.name));
     }
 
     function render() {
       const menu = menus[currentMenu];
       const query = searchInput.value.trim().toLowerCase();
+      const isFilterActive = filterSelect.value !== "default";
       menuNotice.textContent = `${menu.notice} - sparkling and still filtered water free flow is $2 per guest.`;
 
-      const visibleSections = menu.sections
-        .map((menuSection) => ({
-          ...menuSection,
-          items: query ? menuSection.items.filter((menuItem) => itemMatches(menuItem, query)) : menuSection.items
-        }))
-        .filter((menuSection) => menuSection.items.length);
+      const visibleSections = isFilterActive
+        ? [{
+            name: "Results",
+            items: sortItems(menu.sections.flatMap((menuSection) =>
+              menuSection.items.filter((menuItem) =>
+                (!query || itemMatches(menuItem, query)) && itemPassesFilter(menuItem)
+              ).map((menuItem) => ({ ...menuItem, section: menuSection.name }))
+            ))
+          }].filter((menuSection) => menuSection.items.length)
+        : menu.sections
+            .map((menuSection) => ({
+              ...menuSection,
+              items: menuSection.items.filter((menuItem) =>
+                (!query || itemMatches(menuItem, query)) && itemPassesFilter(menuItem)
+              )
+            }))
+            .filter((menuSection) => menuSection.items.length);
 
-      categoryNav.innerHTML = menu.sections.map((menuSection, index) => {
+      const navSections = isFilterActive ? visibleSections : menu.sections;
+      const categoryButtons = navSections.map((menuSection, index) => {
         const id = `section-${slugify(menuSection.name)}`;
         const active = activeCategory ? activeCategory === id : index === 0;
         return `<button class="category-link ${active ? "is-active" : ""}" type="button" data-target="${id}">${escapeHtml(menuSection.name)}</button>`;
       }).join("");
+      categoryNav.innerHTML = isFilterActive && visibleSections.length
+        ? `${categoryButtons}<button class="category-link clear-filter" type="button" data-clear-filter>Clear Filter</button>`
+        : categoryButtons;
 
       menuRoot.innerHTML = visibleSections.map((menuSection) => {
         const id = `section-${slugify(menuSection.name)}`;
+        const sectionItems = menuSection.name === "Pizza"
+          ? renderPizzaItems(menuSection.items)
+          : `<div class="items-grid">
+              ${menuSection.items.map((menuItem) => renderItem(menuItem, menuItem.section || menuSection.name)).join("")}
+            </div>`;
         return `
           <section class="category-section" id="${id}" data-category="${escapeHtml(menuSection.name)}">
             <div class="section-heading">
               <h2>${escapeHtml(menuSection.name)}</h2>
               <span class="section-count">${menuSection.items.length} ${menuSection.items.length === 1 ? "item" : "items"}</span>
             </div>
-            <div class="items-grid">
-              ${menuSection.items.map((menuItem) => renderItem(menuItem, menuSection.name)).join("")}
-            </div>
+            ${sectionItems}
           </section>
         `;
       }).join("");
@@ -909,6 +1168,44 @@
       );
     }
 
+    function renderPizzaItems(items) {
+      const classicheItems = sortByPrice(items.filter((menuItem) => menuItem.tags.includes("Le Classiche")));
+      const rosseItems = sortByPrice(items.filter((menuItem) => menuItem.tags.includes("Le Rosse")));
+      const biancheItems = sortByPrice(items.filter((menuItem) => menuItem.tags.includes("Le Bianche")));
+      const specialItems = items.filter((menuItem) =>
+        !menuItem.tags.includes("Le Classiche") &&
+        !menuItem.tags.includes("Le Rosse") &&
+        !menuItem.tags.includes("Le Bianche")
+      );
+
+      return `
+        <div class="pizza-groups">
+          ${classicheItems.length ? `
+            <div class="pizza-classiche">
+              ${classicheItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
+            </div>
+          ` : ""}
+          ${(rosseItems.length || biancheItems.length) ? `
+            <div class="pizza-style-grid">
+              <div class="pizza-style-column">
+                <h3 class="pizza-style-title">Le Rosse</h3>
+                <div class="pizza-style-items">
+                  ${rosseItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
+                </div>
+              </div>
+              <div class="pizza-style-column">
+                <h3 class="pizza-style-title">Le Bianche</h3>
+                <div class="pizza-style-items">
+                  ${biancheItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
+                  ${specialItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
+                </div>
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      `;
+    }
+
     function renderItem(menuItem, sectionName) {
       const media = menuItem.image
         ? `<figure class="item-photo"><img src="${escapeHtml(menuItem.image)}" alt="${escapeHtml(menuItem.name)}" loading="lazy" width="360" height="270"></figure>`
@@ -924,11 +1221,15 @@
               <h3 class="item-name">${escapeHtml(menuItem.name)}</h3>
               <strong class="price">${escapeHtml(formatPrice(menuItem.price))}</strong>
             </div>
-            <p class="desc">${escapeHtml(menuItem.description)}</p>
             ${tags}
+            <p class="desc">${escapeHtml(menuItem.description)}</p>
           </div>
         </article>
       `;
+    }
+
+    function updateScrollTopButton() {
+      scrollTopButton.classList.toggle("is-visible", window.scrollY > 420);
     }
 
     function openItemModal(itemId) {
@@ -1002,11 +1303,18 @@
         switchButton.setAttribute("aria-pressed", String(switchButton === button));
       });
       searchInput.value = "";
+      updateSearchHint();
       render();
       window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     categoryNav.addEventListener("click", (event) => {
+      if (event.target.closest("[data-clear-filter]")) {
+        filterSelect.value = "default";
+        activeCategory = "";
+        render();
+        return;
+      }
       const button = event.target.closest("[data-target]");
       if (!button) return;
       const target = document.getElementById(button.dataset.target);
@@ -1044,9 +1352,28 @@
 
     searchInput.addEventListener("input", () => {
       activeCategory = "";
+      updateSearchHint();
       render();
     });
 
+    window.addEventListener("resize", updateSearchHint);
+    window.addEventListener("scroll", updateScrollTopButton, { passive: true });
+
+    scrollTopButton.addEventListener("click", () => {
+      document.documentElement.style.scrollBehavior = "auto";
+      window.scrollTo({ top: 0 });
+      requestAnimationFrame(() => {
+        document.documentElement.style.scrollBehavior = "";
+      });
+    });
+
+    filterSelect.addEventListener("change", () => {
+      activeCategory = "";
+      render();
+    });
+
+    updateSearchHint();
+    updateScrollTopButton();
     render();
   </script>
 </body>
