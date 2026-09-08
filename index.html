@@ -323,7 +323,7 @@
     main {
       width: min(100%, 1120px);
       margin: 0 auto;
-      padding: 22px 14px 54px;
+      padding: 22px 14px 20px;
     }
 
     .notice {
@@ -651,6 +651,30 @@
       text-align: center;
     }
 
+    .brought-to-you-by {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+    }
+
+    .brought-to-you-by a {
+      display: inline-flex;
+      align-items: center;
+      line-height: 0;
+    }
+
+    .brought-to-you-by img {
+      display: block;
+      height: 16px;
+      width: auto;
+    }
+
     .scroll-top {
       position: fixed;
       right: 14px;
@@ -815,6 +839,13 @@
       Prices are subject to a 10% service charge and prevailing government taxes. Vegetarian items are marked where shown on the printed menu.
     </footer>
   </main>
+
+  <footer class="brought-to-you-by">
+    Brought to you by
+    <a href="https://menuhaus.click" target="_blank" rel="noopener noreferrer">
+      <img src="assets/menu-photos/menuhaus-logo/menuhaus.png" alt="Menuhaus">
+    </a>
+  </footer>
 
   <div class="modal" id="itemModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-panel">
