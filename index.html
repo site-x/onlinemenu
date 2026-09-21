@@ -323,7 +323,7 @@
     main {
       width: min(100%, 1120px);
       margin: 0 auto;
-      padding: 22px 14px 54px;
+      padding: 22px 14px 18px;
     }
 
     .notice {
@@ -651,6 +651,105 @@
       text-align: center;
     }
 
+    .credit-footer {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 6px 12px;
+      background: var(--paper-deep);
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 0.72rem;
+      text-decoration: none;
+    }
+
+    .credit-footer img {
+      height: 16px;
+      width: auto;
+    }
+
+    .credit-footer:hover {
+      color: var(--ink);
+    }
+
+    .promo-ad {
+      position: fixed;
+      right: 14px;
+      bottom: 68px;
+      z-index: 30;
+      width: min(300px, calc(100vw - 28px));
+      padding: 12px 34px 12px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      text-decoration: none;
+      transform: translateX(calc(100% + 28px));
+      visibility: hidden;
+      transition: transform 450ms ease, visibility 0s 450ms;
+    }
+
+    .promo-ad.is-visible {
+      transform: translateX(0);
+      visibility: visible;
+      transition: transform 450ms ease;
+    }
+
+    .promo-ad img {
+      display: block;
+      height: 18px;
+      width: auto;
+      margin-bottom: 6px;
+    }
+
+    .promo-ad strong {
+      display: block;
+      color: var(--brand-dark);
+      font-size: 0.9rem;
+    }
+
+    .promo-ad p {
+      margin: 3px 0 0;
+      color: var(--muted);
+      font-size: 0.74rem;
+      line-height: 1.35;
+    }
+
+    .promo-ad .promo-sub {
+      margin-top: 2px;
+      color: var(--ink);
+      font-weight: 700;
+    }
+
+    .promo-ad .promo-cta {
+      color: var(--brand);
+      font-weight: 800;
+    }
+
+    .promo-close {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      width: 26px;
+      height: 26px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.1rem;
+      line-height: 1;
+    }
+
+    .promo-close:hover {
+      background: var(--paper-deep);
+      color: var(--ink);
+    }
+
     .scroll-top {
       position: fixed;
       right: 14px;
@@ -816,6 +915,11 @@
     </footer>
   </main>
 
+  <a class="credit-footer" href="https://www.menuhaus.click" target="_blank" rel="noopener">
+  
+    <img src="assets/menuhaus.png" alt="Menuhaus">
+  </a>
+
   <div class="modal" id="itemModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-panel">
       <div class="modal-media" id="modalMedia"></div>
@@ -832,6 +936,14 @@
       </div>
     </div>
   </div>
+  <a class="promo-ad" id="promoAd" href="https://menuhaus.click" target="_blank" rel="noopener" aria-hidden="true">
+    <img src="assets/menuhaus.png" alt="Menuhaus">
+    <strong>Upgrade your menu today!</strong>
+    <p class="promo-sub">Create elegant online menu with Menuhaus</p>
+    <p>Choose a template or import your old menu and it's ready to share! <span class="promo-cta">Try now</span></p>
+    <button class="promo-close" type="button" id="promoClose" aria-label="Close ad">&times;</button>
+  </a>
+
   <button class="scroll-top" type="button" id="scrollTopButton" aria-label="Scroll to top">↑</button>
 
   <script>
@@ -1374,6 +1486,36 @@
 
     updateSearchHint();
     updateScrollTopButton();
+    (function initPromoAd() {
+      const ad = document.getElementById("promoAd");
+      const closeBtn = document.getElementById("promoClose");
+      const KEY = "menuhausAdDismissed";
+      try { if (sessionStorage.getItem(KEY)) return; } catch (e) {}
+      let timer = null;
+      let dismissed = false;
+
+      function startTimer() {
+        if (timer || dismissed) return;
+        window.removeEventListener("scroll", startTimer);
+        timer = setTimeout(() => {
+          if (dismissed) return;
+          ad.classList.add("is-visible");
+          ad.setAttribute("aria-hidden", "false");
+        }, 20000);
+      }
+
+      closeBtn.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        dismissed = true;
+        clearTimeout(timer);
+        ad.classList.remove("is-visible");
+        ad.setAttribute("aria-hidden", "true");
+        try { sessionStorage.setItem(KEY, "1"); } catch (e) {}
+      });
+
+      window.addEventListener("scroll", startTimer, { passive: true });
+    })();
     render();
   </script>
 </body>
