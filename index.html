@@ -219,24 +219,140 @@
       pointer-events: none;
     }
 
-    .filter-select {
+    .filter-menu {
+      position: relative;
+    }
+
+    .filter-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      height: 100%;
       min-height: 46px;
-      width: 118px;
-      padding: 10px 28px 10px 10px;
+      padding: 0 12px;
       border: 1px solid rgba(36, 27, 22, 0.25);
       border-radius: 8px;
       background: #fffdf8;
       color: var(--brand-dark);
       cursor: pointer;
       font-family: Arial, Helvetica, sans-serif;
-      font-size: 0.88rem;
+      font-size: 0.9rem;
       font-weight: 800;
+      white-space: nowrap;
       outline: none;
     }
 
-    .filter-select:focus {
+    .filter-trigger svg {
+      flex: 0 0 auto;
+      width: 18px;
+      height: 18px;
+    }
+
+    .filter-trigger .chevron {
+      width: 14px;
+      height: 14px;
+      transition: transform 160ms ease;
+    }
+
+    .filter-trigger[aria-expanded="true"] .chevron {
+      transform: rotate(180deg);
+    }
+
+    .filter-trigger:focus-visible,
+    .filter-trigger[aria-expanded="true"] {
       border-color: var(--brand);
       box-shadow: 0 0 0 3px rgba(179, 58, 37, 0.15);
+    }
+
+    .filter-trigger.is-active {
+      border-color: var(--brand);
+      background: var(--brand);
+      color: #fffdf8;
+    }
+
+    .filter-panel {
+      position: absolute;
+      top: calc(100% + 6px);
+      right: 0;
+      z-index: 25;
+      width: 236px;
+      padding: 6px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fffdf8;
+      box-shadow: var(--shadow);
+      font-family: Arial, Helvetica, sans-serif;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-4px);
+      transition: opacity 140ms ease, transform 140ms ease, visibility 0s 140ms;
+    }
+
+    .filter-panel.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity 140ms ease, transform 140ms ease;
+    }
+
+    .filter-group-label {
+      margin: 6px 10px 4px;
+      color: var(--muted);
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .filter-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      width: 100%;
+      min-height: 42px;
+      padding: 0 10px;
+      border: 0;
+      border-radius: 6px;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    .filter-option:hover,
+    .filter-option:focus-visible {
+      background: var(--paper-deep);
+      outline: none;
+    }
+
+    .filter-option .check {
+      width: 16px;
+      height: 16px;
+      margin-left: auto;
+      color: var(--brand);
+      visibility: hidden;
+    }
+
+    .filter-option[aria-checked="true"] {
+      color: var(--brand-dark);
+      background: rgba(179, 58, 37, 0.08);
+    }
+
+    .filter-option[aria-checked="true"] .check {
+      visibility: visible;
+    }
+
+    .filter-divider {
+      height: 1px;
+      margin: 6px 4px;
+      background: var(--line);
+    }
+
+    .filter-reset {
+      color: var(--muted);
+      font-size: 0.88rem;
     }
 
     .category-strip {
@@ -887,15 +1003,22 @@
             <path d="m21 21-4.3-4.3m1.3-5.2a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
           </svg>
         </label>
-        <label>
-          <span class="sr-only">Filter menu</span>
-          <select class="filter-select" id="filterSelect">
-            <option value="default">Filter</option>
-            <option value="price-asc">Price: Low to High</option>
-            <option value="price-desc">Price: High to Low</option>
-            <option value="vegetarian">Vegetarian</option>
-          </select>
-        </label>
+        <div class="filter-menu" id="filterMenu">
+          <button class="filter-trigger" type="button" id="filterTrigger" aria-haspopup="menu" aria-expanded="false" aria-controls="filterPanel">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"/></svg>
+            <span id="filterLabel">Filter</span>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
+          </button>
+          <div class="filter-panel" id="filterPanel" role="menu" aria-label="Filter menu">
+            <p class="filter-group-label">Sort by price</p>
+            <button class="filter-option" type="button" role="menuitemradio" aria-checked="false" data-filter="price-asc" data-label="Price ↑">Low to high <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></button>
+            <button class="filter-option" type="button" role="menuitemradio" aria-checked="false" data-filter="price-desc" data-label="Price ↓">High to low <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></button>
+            <p class="filter-group-label">Dietary</p>
+            <button class="filter-option" type="button" role="menuitemradio" aria-checked="false" data-filter="vegetarian" data-label="Vegetarian">Vegetarian only <svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12 5 5 9-10"/></svg></button>
+            <div class="filter-divider" role="separator"></div>
+            <button class="filter-option filter-reset" type="button" role="menuitem" data-filter="default">Clear filter</button>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -1000,11 +1123,11 @@
       item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
       item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", photos["Tonno & Cipolla"], ["Le Bianche"]),
       item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
-      item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
-      item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
+      item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft olio style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
+      item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani (pickled & tangy vegetable), Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
       item("Prosciutto & Funghi", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
       item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
-      item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
+      item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Viani Toscana ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
       item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
       item("Burrata & Capocollo", "Agerola fior di latte, black Leccino olives, sundry tomato, capocollo di Martina Franca, pecorino Romano DOP, 125gr of Puglia's burrata", "40", photos["Capocollo"], ["Le Bianche"]),
       item("Capricciosa", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms, Leccino olives, artichoke", "36", photos["Capricciosa"], ["Le Rosse"]),
@@ -1082,11 +1205,11 @@
             item("Provola & Pepe", "tomato sauce, smoked Naples provola, freshly cracked pepper", "29", photos["Provola & Pepe"], ["V", "Le Rosse"]),
             item("Tonno & Cipolla", "Agerola fior di latte, pecorino Romano DOP, tuna, Tropea red onion, cherry tomato", "32", photos["Tonno & Cipolla"], ["Le Bianche"]),
             item("4 Cheese", "Agerola fior di latte, Gorgonzola dolce DOP, pecorino Romano DOP, smoked provola", "36", photos["4 Cheese"], ["V", "Le Bianche"]),
-            item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft oil style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
-            item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani, Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
+            item("Ortolana", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, mix of veggies in soft olio style", "32", photos["Ortolana"], ["V", "Le Rosse"]),
+            item("Friarielli & Salsiccia", "Agerola fior di latte, pecorino Romano DOP, friarielli Napoletani (pickled & tangy vegetable), Italian pork sausage", "36", photos["Friarielli & Salsiccia"], ["Le Bianche"]),
             item("Prosciutto & Funghi", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms", "36", photos["Prosciutto & Funghi"], ["Le Rosse"]),
             item("Cetara", "tomato sauce, Agerola fior di latte, Cetara anchovies, pecorino Romano DOP, Leccino olives, capers", "36", photos["Cetara"], ["Le Rosse"]),
-            item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Vairano ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
+            item("Toscana", "Agerola fior di latte, pecorino Romano DOP, rocket salad, Viani Toscana ham 30 month, Parmigiano Reggiano, cherry tomato", "40", photos["Toscana"], ["Le Bianche"]),
             item("Diavola", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, spianata calabra", "36", photos["Diavola"], ["Le Rosse"]),
             item("Burrata & Capocollo", "Agerola fior di latte, black Leccino olives, sundry tomato, capocollo di Martina Franca, pecorino Romano DOP, 125gr of Puglia's burrata", "40", photos["Capocollo"], ["Le Bianche"]),
             item("Capricciosa", "tomato sauce, Agerola fior di latte, pecorino Romano DOP, cotto ham, mushrooms, Leccino olives, artichoke", "36", photos["Capricciosa"], ["Le Rosse"]),
@@ -1117,7 +1240,10 @@
     const searchInput = document.querySelector("#searchInput");
     const searchRow = document.querySelector(".search-row");
     const searchHintText = document.querySelector("#searchHintText");
-    const filterSelect = document.querySelector("#filterSelect");
+    const filterTrigger = document.querySelector("#filterTrigger");
+    const filterPanel = document.querySelector("#filterPanel");
+    const filterLabel = document.querySelector("#filterLabel");
+    let currentFilter = "default";
     const emptyState = document.querySelector("#emptyState");
     const menuNotice = document.querySelector("#menuNotice");
     const itemModal = document.querySelector("#itemModal");
@@ -1185,14 +1311,14 @@
     }
 
     function itemPassesFilter(menuItem) {
-      return filterSelect.value !== "vegetarian" || menuItem.tags.includes("V");
+      return currentFilter !== "vegetarian" || menuItem.tags.includes("V");
     }
 
     function sortItems(items) {
       const sortedItems = [...items];
-      if (filterSelect.value === "price-asc") {
+      if (currentFilter === "price-asc") {
         sortedItems.sort((a, b) => getSortablePrice(a.price) - getSortablePrice(b.price) || a.name.localeCompare(b.name));
-      } else if (filterSelect.value === "price-desc") {
+      } else if (currentFilter === "price-desc") {
         sortedItems.sort((a, b) => {
           const priceA = getNumericPrice(a.price);
           const priceB = getNumericPrice(b.price);
@@ -1212,7 +1338,14 @@
     function render() {
       const menu = menus[currentMenu];
       const query = searchInput.value.trim().toLowerCase();
-      const isFilterActive = filterSelect.value !== "default";
+      const isFilterActive = currentFilter !== "default";
+      filterTrigger.classList.toggle("is-active", isFilterActive);
+      filterLabel.textContent = "Filter";
+      filterPanel.querySelectorAll('[role="menuitemradio"]').forEach((option) => {
+        const checked = option.dataset.filter === currentFilter;
+        option.setAttribute("aria-checked", String(checked));
+        if (checked) filterLabel.textContent = option.dataset.label;
+      });
       menuNotice.textContent = `${menu.notice} - sparkling and still filtered water free flow is $2 per guest.`;
 
       const visibleSections = isFilterActive
@@ -1309,9 +1442,13 @@
                 <h3 class="pizza-style-title">Le Bianche</h3>
                 <div class="pizza-style-items">
                   ${biancheItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
-                  ${specialItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
                 </div>
               </div>
+            </div>
+          ` : ""}
+          ${specialItems.length ? `
+            <div class="pizza-specials">
+              ${specialItems.map((menuItem) => renderItem(menuItem, "Pizza")).join("")}
             </div>
           ` : ""}
         </div>
@@ -1402,7 +1539,9 @@
       const isOutsideLeft = buttonBox.left < navBox.left + 8;
       const isOutsideRight = buttonBox.right > navBox.right - 34;
       if (isOutsideLeft || isOutsideRight) {
-        activeButton.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        // Scroll only the category bar; scrollIntoView would also scroll the page and fight the user's scroll
+        const offset = buttonBox.left - navBox.left - (navBox.width - buttonBox.width) / 2;
+        categoryNav.scrollTo({ left: categoryNav.scrollLeft + offset, behavior: "smooth" });
       }
     }
 
@@ -1422,7 +1561,7 @@
 
     categoryNav.addEventListener("click", (event) => {
       if (event.target.closest("[data-clear-filter]")) {
-        filterSelect.value = "default";
+        currentFilter = "default";
         activeCategory = "";
         render();
         return;
@@ -1479,9 +1618,47 @@
       });
     });
 
-    filterSelect.addEventListener("change", () => {
+    function setFilterPanelOpen(open) {
+      filterPanel.classList.toggle("is-open", open);
+      filterTrigger.setAttribute("aria-expanded", String(open));
+      if (open) {
+        const selected = filterPanel.querySelector('[aria-checked="true"]') || filterPanel.querySelector(".filter-option");
+        selected.focus();
+      }
+    }
+
+    filterTrigger.addEventListener("click", () => {
+      setFilterPanelOpen(!filterPanel.classList.contains("is-open"));
+    });
+
+    filterPanel.addEventListener("click", (event) => {
+      const option = event.target.closest("[data-filter]");
+      if (!option) return;
+      currentFilter = option.dataset.filter;
       activeCategory = "";
+      setFilterPanelOpen(false);
+      filterTrigger.focus();
       render();
+    });
+
+    filterPanel.addEventListener("keydown", (event) => {
+      const options = [...filterPanel.querySelectorAll(".filter-option")];
+      const index = options.indexOf(document.activeElement);
+      if (event.key === "ArrowDown" || event.key === "ArrowUp") {
+        event.preventDefault();
+        const step = event.key === "ArrowDown" ? 1 : -1;
+        options[(index + step + options.length) % options.length].focus();
+      } else if (event.key === "Escape") {
+        event.preventDefault();
+        setFilterPanelOpen(false);
+        filterTrigger.focus();
+      } else if (event.key === "Tab") {
+        setFilterPanelOpen(false);
+      }
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest("#filterMenu")) setFilterPanelOpen(false);
     });
 
     updateSearchHint();
